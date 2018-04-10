@@ -73,6 +73,6 @@ if __name__ == '__main__':
 
     vocab_file_path = _create_vocab_file('xf_vocab.txt')
     project_root_dir = os.path.dirname(os.path.dirname(__file__))
-    train_data_path = os.path.join(project_root_dir, 'datafile/model_data/xf_train.txt')
+    train_data_path = os.path.join(project_root_dir, 'datafile/xf_purpose_data/xf_train.txt')
     _build_vocab(train_data_path, vocab_file_path)
 

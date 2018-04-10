@@ -7,12 +7,13 @@ from model_interface.utils import *
 flags = tf.app.flags
 FLAGS = tf.app.flags.FLAGS
 
-flags.DEFINE_string("ckpt_path", "result", "Path to save model")
+flags.DEFINE_string("ckpt_path", "purpose_ckpt", "Path to save model")
+flags.DEFINE_string("test_result",     "classification.txt",    "File for log")
 flags.DEFINE_string("log_file",     "train.log",    "File for log")
 
 
 def xf_purpose_test():
-    save_result_path = 'classification.txt'
+    save_result_path = FLAGS.test_result
     config = TCNNConfig()
     logger = get_logger(FLAGS.log_file)
     with tf.Session() as sess:

@@ -10,13 +10,13 @@ import pdb
 from model_interface.utils import save_model
 
 
-def run_epoch():
+def run_epoch(path):
     # 载入数据
     print('Loading loader...')
     start_time = time.time()
 
     # words-词典中的词
-    x_train, y_train, x_test, y_test, x_val, y_val, words = process_file()
+    x_train, y_train, x_test, y_test, x_val, y_val, words = process_file(corpus_path=path.corpus_path)
 
     config = TCNNConfig()
     config.vocab_size = len(words)
@@ -113,7 +113,7 @@ def run_epoch():
     print(msg.format(loss_test, acc_test))
 
     # 保存训练好的模型
-    model_path = 'result'
+    model_path = path.save_path
     save_path = save_model(session, model, model_path)
     print('model is saved to :', save_path)
 

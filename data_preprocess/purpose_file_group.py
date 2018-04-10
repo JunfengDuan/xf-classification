@@ -70,9 +70,9 @@ def save_file(dir_name):
     :param dir_name: 原数据目录
     :return:
     """
-    f_train = open('../datafile/model_data/xf_train.txt', 'w', encoding='utf-8')
-    f_val = open('../datafile/model_data/xf_val.txt', 'w', encoding='utf-8')
-    f_test = open('../datafile/model_data/xf_test.txt', 'w', encoding='utf-8')
+    f_train = open('../datafile/xf_purpose_data/xf_train.txt', 'w', encoding='utf-8')
+    f_val = open('../datafile/xf_purpose_data/xf_val.txt', 'w', encoding='utf-8')
+    f_test = open('../datafile/xf_purpose_data/xf_test.txt', 'w', encoding='utf-8')
 
     files = os.listdir(dir_name)
     for file in files:
@@ -97,9 +97,9 @@ def save_file(dir_name):
     print('Write finished')
 
 if __name__ == '__main__':
-    create_file('../datafile/model_data')
+    create_file('../datafile/xf_purpose_data')
     save_file('../datafile/xf_data')
-    print(len(open('../datafile/model_data/xf_train.txt', 'r', encoding='utf-8').readlines()))  # 60000
-    print(len(open('../datafile/model_data/xf_val.txt', 'r', encoding='utf-8').readlines()))  # 6000
-    print(len(open('../datafile/model_data/xf_test.txt', 'r', encoding='utf-8').readlines()))  # 10216
+    print(len(open('../datafile/xf_purpose_data/xf_train.txt', 'r', encoding='utf-8').readlines()))  # 60000
+    print(len(open('../datafile/xf_purpose_data/xf_val.txt', 'r', encoding='utf-8').readlines()))  # 6000
+    print(len(open('../datafile/xf_purpose_data/xf_test.txt', 'r', encoding='utf-8').readlines()))  # 10216
 

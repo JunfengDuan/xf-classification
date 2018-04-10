@@ -1,4 +1,16 @@
-todo：
+# 基于CNN实现的分类模型
+
+## Train
+### 信访目的模型训练
+
+python3 train_run.py --ckpt_path=purpose_ckpt --corpus_path=xf_purpose_data
+
+### 扬言模型训练
+
+python3 train_run.py --ckpt_path=yy_ckpt --corpus_path=xf_yy_data
+
+
+## Todo：
 1.f1-score
 
 2.model 调用接口

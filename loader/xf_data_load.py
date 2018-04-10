@@ -72,9 +72,10 @@ def file_to_ids(contents, labels, word_to_id, max_length=600):
     return x_pad, y_pad
 
 
-def process_file(data_path='datafile', seq_length=600):
+def process_file(data_path='datafile', corpus_path='corpus', seq_length=600):
     """
     一次性返回所有数据
+    :param corpus_path:
     :param data_path:
     :param seq_length:
     :return:
@@ -82,9 +83,10 @@ def process_file(data_path='datafile', seq_length=600):
 
     words, word_to_id = read_vocab(os.path.join(data_path, 'vocab/xf_vocab.txt'))
 
-    train_contents, train_labels = read_file(os.path.join(data_path, 'model_data/xf_train.txt'))
-    test_contents, test_labels = read_file(os.path.join(data_path, 'model_data/xf_test.txt'))
-    val_contents, val_labels = read_file(os.path.join(data_path, 'model_data/xf_val.txt'))
+    corpus_path = os.path.join(data_path, corpus_path)
+    train_contents, train_labels = read_file(os.path.join(corpus_path, 'xf_train.txt'))
+    test_contents, test_labels = read_file(os.path.join(corpus_path, 'xf_test.txt'))
+    val_contents, val_labels = read_file(os.path.join(corpus_path, 'xf_val.txt'))
 
     x_train, y_train = file_to_ids(train_contents, train_labels, word_to_id, seq_length)
     x_test, y_test = file_to_ids(test_contents, test_labels, word_to_id, seq_length)
@@ -104,7 +106,7 @@ def batch_iter(data, batch_size=64, num_epochs=5):
     data = np.array(data)
     data_size = len(data)
     num_batch_per_epoch = int((data_size - 1) / batch_size) + 1  # 批数
-    for epoch in range(num_epochs):
+    for epoch in range(num_epochs):  # 迭代num_epochs次
         indices = np.random.permutation(np.arange(data_size))
         shuffled_data = data[indices]  # 如果一个批次里样本的相关性太大，会导致模型的泛化能力不好，需要洗牌
 
