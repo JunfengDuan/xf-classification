@@ -24,6 +24,12 @@ python3 yy_predict_run.py --model_test=true
 ## 模型预测,启动服务
 python3 yy_predict_run.py
 
+## 调用接口
+访问：http://host:8084/yy_predict
+
+传参格式{"text" : "..."}
+
+返回数据格式：json字符串{"result":"是/否"}
 
 ## Todo：
 1.f1-score
