@@ -16,7 +16,7 @@ def read_vocab(filename):
     :return:
     """
     words = list(map(lambda line: line.strip(),
-                     open(filename, 'r').readlines()))
+                     open(filename, 'r', encoding='utf-8').readlines()))
     word_to_id = dict(zip(words, range(len(words))))
 
     return words, word_to_id
@@ -27,7 +27,9 @@ def read_category():
     读取分类目录，固定
     :return:
     """
-    categories = ['申诉', '求决', '意见建议', '揭发控告', '其他']
+    # categories = ['申诉', '求决', '意见建议', '揭发控告', '其他']
+    categories = ['是', '否']
+
     cat_to_id = dict(zip(categories, range(len(categories))))
 
     return categories, cat_to_id

@@ -6,12 +6,12 @@ class TCNNConfig(object):
     """CNN配置参数"""
 
     # 模型参数
-    embedding_dim = 64      # 词向量维度
-    seq_length = 600        # 序列长度
-    num_classes = 5        # 类别数
+    embedding_dim = 64      # 词向量维度，词向量的长度
+    seq_length = 600        # 序列长度，句子长度
+    num_classes = 2        # 类别数
 
     num_filters = 128       # 卷积核数目
-    kernel_size = 5         # 卷积核尺寸
+    kernel_size = 5         # 卷积核尺寸，每次覆盖5个单词
     vocab_size = 5000       # 词汇表达小
 
     hidden_dim = 128        # 全连接层神经元

@@ -11,6 +11,7 @@ class TextCNN(object):
     def __init__(self, config):
         self.config = config
 
+        # shape：第一个维度是批处理大小，而使用 None 来表示这个值，说明网络允许处理任意大小的批次
         self.input_x = tf.placeholder(tf.int32,
                                       [None, self.config.seq_length], name='input_x')
 
@@ -19,7 +20,7 @@ class TextCNN(object):
 
         self.cnn()
 
-        var = tf.global_variables()
+        var = tf.global_variables()  # 保存所有变量/可以选择要保存的变量
 
         self.saver = tf.train.Saver(var)
 
@@ -42,7 +43,7 @@ class TextCNN(object):
                                     self.config.kernel_size, name='conv')
 
             # global max pooling
-            gmp = tf.reduce_max(conv, reduction_indices=[1], name='gmp')
+            gmp = tf.reduce_max(conv, reduction_indices=[1], name='gmp')  # 取一行上的最大值
 
         with tf.name_scope("score"):
             # 全连接层，后面接dropout以及relu激活

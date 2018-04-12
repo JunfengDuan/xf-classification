@@ -1,13 +1,28 @@
 # 基于CNN实现的分类模型
 
 ## Train
+### 参数修改
+分类数：configuration.py num_classes
+
 ### 信访目的模型训练
 
-python3 train_run.py --ckpt_path=purpose_ckpt --corpus_path=xf_purpose_data
+python3 train_run.py --ckpt_path=purpose_ckpt --corpus_path=xf_purpose_data --model_name=purpose
 
 ### 扬言模型训练
 
-python3 train_run.py --ckpt_path=yy_ckpt --corpus_path=xf_yy_data
+python3 train_run.py --ckpt_path=yy_ckpt --corpus_path=xf_yy_data --model_name=yy
+
+## Tensorboard 可视化
+
+tensorboard --logdir=tensorboard/yy
+
+## 模型测试
+打开mian方法第二行注释，注释第一行
+
+python3 yy_predict_run.py --model_test=true
+
+## 模型预测,启动服务
+python3 yy_predict_run.py
 
 
 ## Todo：
@@ -25,4 +40,4 @@ python3 train_run.py --ckpt_path=yy_ckpt --corpus_path=xf_yy_data
 
 7.输出准确率-误差图
 
-cat xf_test.txt| head -n 300 >> ../sample.txt
+head -n 300 xf_test.txt > sample.txt

@@ -1,11 +1,13 @@
 import os
 import xlrd
+import numpy as np
 
 
 def read_yy_file(file_path):
     yy_words = []
-    with open(file_path, 'r') as f:
+    with open(file_path, 'r', encoding='utf-8') as f:
         for line in f.readlines():
+            line = line.replace('\n', '')
             yy_words.append(line)
     return yy_words
 
@@ -43,7 +45,7 @@ def get_column_index(table, column_name):
     return column_index
 
 
-def read_xls_file(file_name):
+def read_xls_file(file_name, yy_words):
     """
     读取文件并转换为一行（去空格）
     :param file_name:
@@ -62,17 +64,33 @@ def read_xls_file(file_name):
 
     yy_contents = list(zip(yy, contents))
 
-    yy_words = read_yy_file('../datafile/yy_word.txt')
+    items = yy_content_process(yy_contents, yy_words)
 
+    return items
+
+
+def yy_content_process(yy_contents, yy_words):
+    """
+    扬言插入正例样本
+    :param yy_words:
+    :param yy_contents:
+    :return:
+    """
 
     items = []
     for item in yy_contents[1:len(yy_contents)]:
         clean_content = str(item[1]).replace('\n', '').replace('\t', '').replace('\r', '').replace('  ', '')
+        tag = item[0]
         if len(clean_content) < 10:
             continue
+        rand = np.random.randint(1, 10)  # 将语料库中三分之一的样本改造成正例样本，剩余为负样本
+        if rand % 3 == 0:
+            yy_1 = yy_words[np.random.randint(0, 12)]
+            yy_2 = yy_words[np.random.randint(0, 12)]
 
-
-        items.append(item[0] + '\t' + clean_content)
+            tag = '是'
+            clean_content = clean_content.replace('，', '，;,$,').replace(';', yy_1).replace('$', yy_2)
+        items.append(tag + '\t' + clean_content)
 
     return items
 
@@ -88,10 +106,13 @@ def save_file(dir_name):
     f_val = open('../datafile/xf_yy_data/xf_val.txt', 'w', encoding='utf-8')
     f_test = open('../datafile/xf_yy_data/xf_test.txt', 'w', encoding='utf-8')
 
+    yy_words = read_yy_file('../datafile/yy_word.txt')
+    print('扬言敏感词：', yy_words)
+
     files = os.listdir(dir_name)
     for file in files:
         filename = os.path.join(dir_name, file)
-        yy_content = read_xls_file(filename)
+        yy_content = read_xls_file(filename, yy_words)
 
         count = 0
         for text in yy_content:
@@ -115,5 +136,5 @@ if __name__ == '__main__':
     save_file('../datafile/xf_data')
     print(len(open('../datafile/xf_yy_data/xf_train.txt', 'r', encoding='utf-8').readlines()))  # 60000
     print(len(open('../datafile/xf_yy_data/xf_val.txt', 'r', encoding='utf-8').readlines()))  # 6000
-    print(len(open('../datafile/xf_yy_data/xf_test.txt', 'r', encoding='utf-8').readlines()))  # 10216
+    print(len(open('../datafile/xf_yy_data/xf_test.txt', 'r', encoding='utf-8').readlines()))  # 10216/10219
 

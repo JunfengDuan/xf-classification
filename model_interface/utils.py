@@ -8,9 +8,6 @@ import numpy as np
 
 
 def save_model(sess, model, path):
-    if os.path.exists(path):
-        shutil.rmtree(path)
-    os.makedirs(path)
 
     checkpoint_path = os.path.join(path, "model.ckpt")
     save_path = model.saver.save(sess, checkpoint_path)
@@ -105,3 +102,16 @@ def write_to_file(filename, text_list):
     with open(filename, 'w', encoding='utf-8') as f:
         for text in text_list:
             f.write(text + '\n')
+
+
+def make_path(path):
+
+    if os.path.exists(path.tensorboard_dir):
+        shutil.rmtree(path.tensorboard_dir)
+
+    os.makedirs(path.tensorboard_dir)
+
+    if os.path.exists(path.ckpt_path):
+        shutil.rmtree(path.ckpt_path)
+
+    os.makedirs(path.ckpt_path)

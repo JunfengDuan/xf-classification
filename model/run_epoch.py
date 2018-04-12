@@ -5,8 +5,7 @@ from datetime import timedelta
 from model.cnn_model import *
 from loader.xf_data_load import *
 from model.configuration import *
-import pdb
-
+from model_interface.utils import make_path
 from model_interface.utils import save_model
 
 
@@ -21,7 +20,8 @@ def run_epoch(path):
     config = TCNNConfig()
     config.vocab_size = len(words)
     model = TextCNN(config)
-    tensorboard_dir = 'tensorboard/textcnn'
+
+    make_path(path)
 
     end_time = time.time()
     time_dif = end_time - start_time
@@ -37,11 +37,8 @@ def run_epoch(path):
     tf.summary.scalar("loss", model.loss)
     tf.summary.scalar("accuracy", model.acc)
 
-    if not os.path.exists(tensorboard_dir):
-        os.makedirs(tensorboard_dir)
-
     merged_summary = tf.summary.merge_all()
-    writer = tf.summary.FileWriter(tensorboard_dir)
+    writer = tf.summary.FileWriter(path.tensorboard_dir)
     writer.add_graph(session.graph)
 
     # 生成批次数据
@@ -113,7 +110,7 @@ def run_epoch(path):
     print(msg.format(loss_test, acc_test))
 
     # 保存训练好的模型
-    model_path = path.save_path
+    model_path = path.ckpt_path
     save_path = save_model(session, model, model_path)
     print('model is saved to :', save_path)
 
